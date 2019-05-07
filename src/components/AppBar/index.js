@@ -100,7 +100,7 @@ function SearchAppBar(props) {
 							<SearchIcon/>
 						</div>
 						<InputBase
-							placeholder="Search…"
+							placeholder="جست و جو..."
 							classes={{
 								root: classes.inputRoot,
 								input: classes.inputInput,
