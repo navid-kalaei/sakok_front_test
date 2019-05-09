@@ -10,7 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 // import InputLabel from '@material-ui/core/InputLabel'
 import Dropzone from '../Dropzone'
-// import CategoriesMenu from '../CategoriesMenu'
+import CategoriesMenu from '../CategoriesMenu'
 
 
 const styles = theme => ({
@@ -54,7 +54,7 @@ const FormDialog = (props) => {
 					rowsMax={2}
 					className={classes.rtl}
 				/>
-				{/*<CategoriesMenu/>*/}
+				<CategoriesMenu/>
 			</DialogContent>
 			<DialogActions className={classes.rtl}>
 				<Button onClick={handleClose(handleUploadImageDialog)} color="secondary" variant="contained">
