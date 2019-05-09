@@ -35,7 +35,8 @@ const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(
 
 const FormDialog = (props) => {
 	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
-	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag1', 'tag2', 'tag3', 'tag1', 'tag2', 'tag3'])
+	// eslint-disable-next-line
+	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
 
 	return (
 		<Dialog

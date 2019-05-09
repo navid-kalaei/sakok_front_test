@@ -39,6 +39,8 @@ function Accept(props) {
 		accept: 'image/jpeg, image/png',
 	})
 
+	const acceptedFile = acceptedFiles.length !==0 ? acceptedFiles[0] : null
+
 	return (
 		<section className={classes.root}>
 			<div {...getRootProps({className: classes.dropzone})}>
@@ -48,9 +50,9 @@ function Accept(props) {
 			</div>
 			<aside>
 				<Typography variant="body" className={classNames(classes.rtl, classes.margin)}>فایل انتخاب شده:</Typography>
-				{acceptedFiles.length ? (
+				{acceptedFile ? (
 					<Typography variant="subtitle2" className={classNames(classes.rtl, classes.margin)}>
-						{` بایت ${acceptedFiles[0].path} - ${acceptedFiles[0].size}`}
+						{` بایت ${acceptedFile.path} - ${acceptedFile.size}`}
 					</Typography>
 				) : (
 					<Typography variant="subtitle2" className={classNames(classes.rtl, classes.margin)}>هنوز فایلی انتخاب نشده است</Typography>
