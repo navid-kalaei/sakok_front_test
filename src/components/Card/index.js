@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import {withStyles} from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
 import Card from '@material-ui/core/Card'
@@ -15,33 +15,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AddIcon from '@material-ui/icons/Add'
 import Tag from '../Tag'
+import styles from './styles'
 
-
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		marginTop: 12,
-	},
-	media: {
-		objectFit: 'cover',
-	},
-	actions: {
-		display: 'flex',
-	},
-	expand: {
-		transform: 'rotate(0deg)',
-		marginLeft: 'auto',
-		transition: theme.transitions.create('transform', {
-			duration: theme.transitions.duration.shortest,
-		}),
-	},
-	expandOpen: {
-		transform: 'rotate(180deg)',
-	},
-	fab: {
-		margin: theme.spacing.unit,
-	},
-})
 
 function handleClick() {
 	alert('You clicked the Chip.') // eslint-disable-line no-alert
@@ -93,7 +68,7 @@ function CustomCard(props) {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
 					{tags.map((tag) => (
-							<Tag >{tag}</Tag>
+							<Tag key={tag}>{tag}</Tag>
 						),
 					)
 					}
