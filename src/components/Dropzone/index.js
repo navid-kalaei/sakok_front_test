@@ -1,6 +1,8 @@
 import React from 'react'
 import {useDropzone} from 'react-dropzone'
 import withStyle from '@material-ui/core/styles/withStyles'
+import Typography from '@material-ui/core/Typography'
+import classNames from 'classnames'
 
 
 const styles = theme => ({
@@ -24,6 +26,9 @@ const styles = theme => ({
 	},
 	rtl: {
 		direction: 'rtl',
+	},
+	margin: {
+		marginTop: theme.spacing.unit * 2,
 	}
 })
 
@@ -42,11 +47,13 @@ function Accept(props) {
 				<em>(قابل پذیرش هستند *.jpeg و *.png تنها تصاویر)</em>
 			</div>
 			<aside>
-				<h4 className={classes.rtl}>فایل انتخاب شده</h4>
-				{acceptedFiles.length !==0 && (
-					<p className={classes.rtl}>
+				<Typography variant="body" className={classNames(classes.rtl, classes.margin)}>فایل انتخاب شده:</Typography>
+				{acceptedFiles.length ? (
+					<Typography variant="subtitle2" className={classNames(classes.rtl, classes.margin)}>
 						{` بایت ${acceptedFiles[0].path} - ${acceptedFiles[0].size}`}
-					</p>
+					</Typography>
+				) : (
+					<Typography variant="subtitle2" className={classNames(classes.rtl, classes.margin)}>هنوز فایلی انتخاب نشده است</Typography>
 				)
 				}
 			</aside>
