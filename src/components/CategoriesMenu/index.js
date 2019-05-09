@@ -32,6 +32,7 @@ class TextFields extends React.Component {
 
 	handleChange = name => event => {
 		this.setState({[name]: event.target.value})
+		this.props.handleCategoryValue(event.target.value)
 	}
 
 	render() {
@@ -68,6 +69,7 @@ class TextFields extends React.Component {
 
 TextFields.propTypes = {
 	classes: PropTypes.object.isRequired,
+	handleCategoryValue: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(TextFields)

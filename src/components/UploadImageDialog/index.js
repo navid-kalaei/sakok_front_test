@@ -33,10 +33,15 @@ const styles = theme => ({
 
 const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(false))
 
+const onDescriptionChange = (handleDescription) => (event) => (handleDescription(event.target.value))
+
 const FormDialog = (props) => {
 	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
 	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
+	// eslint-disable-next-line
+	const [selectedCategory, handleCategoryValue] = useState('none')
+	const [description, handleDescription] = useState('')
 
 	return (
 		<Dialog
@@ -46,7 +51,7 @@ const FormDialog = (props) => {
 			maxWidth="sm"
 			fullWidth
 		>
-			<DialogTitle id="form-dialog-title" className={classes.rtl}>بارگذاری تصویر </DialogTitle>
+			<DialogTitle id="form-dialog-title" className={classes.rtl}>مشخصات تصویر</DialogTitle>
 			<DialogContent>
 				<Dropzone/>
 				<Typography variant="body1" className={classNames(classes.rtl, classes.description)}>توضیحات:</Typography>
@@ -56,20 +61,22 @@ const FormDialog = (props) => {
 					id="description"
 					name="description"
 					type="text"
+					value={description}
 					multiline
 					fullWidth
 					rowsMax={2}
 					className={classes.rtl}
+					onChange={onDescriptionChange(handleDescription)}
 				/>
-				<Grid container spacing={4} className={classes.rtl}>
+				<Grid container spacing={0} className={classes.rtl}>
 					<Grid item xs={6}>
 						<TagInput/>
 					</Grid>
 					<Grid item xs={6}>
-						<CategoriesMenu/>
+						<CategoriesMenu handleCategoryValue={handleCategoryValue}/>
 					</Grid>
 					{tags.map(tag => (
-						<Grid item key={tag} direction="row-reverse">
+						<Grid item key={tag}>
 							<Tag>{tag}</Tag>
 						</Grid>
 					))}
