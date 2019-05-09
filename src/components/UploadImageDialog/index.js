@@ -10,7 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 // import InputLabel from '@material-ui/core/InputLabel'
 import Dropzone from '../Dropzone'
-import CategoriesMenu from '../CategoriesMenu'
+// import CategoriesMenu from '../CategoriesMenu'
 
 
 const styles = theme => ({
