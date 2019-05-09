@@ -1,95 +1,93 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
-
+import TextField from '@material-ui/core/TextField'
 
 const styles = theme => ({
-	root: {
-		width: '100%',
-		maxWidth: 360,
-		backgroundColor: theme.palette.background.paper,
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap',
+	},
+	textField: {
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+		width: 200,
+		direction: 'rtl',
+	},
+	dense: {
+		marginTop: theme.spacing.unit * 2,
+	},
+	menu: {
+		width: 200,
 	},
 	rtl: {
 		direction: 'rtl',
-	}
+	},
 })
 
-const options = [
-	'Show some love to Material-UI',
-	'Show all notification content',
-	'Hide sensitive notification content',
-	'Hide all notification content',
+const currencies = [
+	{
+		value: 'USD',
+		label: '$',
+	},
+	{
+		value: 'EUR',
+		label: '€',
+	},
+	{
+		value: 'BTC',
+		label: '฿',
+	},
+	{
+		value: 'JPY',
+		label: '¥',
+	},
 ]
 
-class SimpleListMenu extends React.Component {
+class TextFields extends React.Component {
 	state = {
-		anchorEl: null,
-		selectedIndex: 1,
+		currency: 'EUR',
 	}
 
-	handleClickListItem = event => {
-		this.setState({anchorEl: event.currentTarget})
-	}
-
-	handleMenuItemClick = (event, index) => {
-		this.setState({selectedIndex: index, anchorEl: null})
-	}
-
-	handleClose = () => {
-		this.setState({anchorEl: null})
+	handleChange = name => event => {
+		this.setState({[name]: event.target.value})
 	}
 
 	render() {
 		const {classes} = this.props
-		const {anchorEl} = this.state
 
 		return (
-			<div className={classes.root}>
-				<List component="nav">
-					<ListItem
-						button
-						aria-haspopup="true"
-						aria-controls="lock-menu"
-						aria-label="دسته‌بندی"
-						onClick={this.handleClickListItem}
-					>
-						<ListItemText
-							primary="دسته‌بندی"
-							secondary={options[this.state.selectedIndex]}
-						/>
-					</ListItem>
-				</List>
-				<Menu
-					id="lock-menu"
-					anchorEl={anchorEl}
-					open={Boolean(anchorEl)}
-					onClose={this.handleClose}
-					className={classes.rtl}
+			<form className={classes.container} noValidate autoComplete="off">
+
+				<TextField
+					id="standard-select-currency"
+					select
+					label="دسته‌بندی"
+					className={classes.textField}
+					value={this.state.currency}
+					onChange={this.handleChange('currency')}
+					SelectProps={{
+						MenuProps: {
+							className: classes.menu,
+						},
+					}}
+					margin="normal"
+					variant="outlined"
 				>
-					{options.map((option, index) => (
-						<MenuItem
-							key={option}
-							selected={index === this.state.selectedIndex}
-							onClick={event => this.handleMenuItemClick(event, index)}
-							className={classes.rtl}
-						>
-							{option}
+					{currencies.map(option => (
+						<MenuItem key={option.value} value={option.value} className={classes.rtl}>
+							{option.label}
 						</MenuItem>
 					))}
-				</Menu>
-			</div>
+				</TextField>
+			</form>
 		)
 	}
 }
 
-SimpleListMenu.propTypes = {
+TextFields.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(SimpleListMenu)
-
+export default withStyles(styles)(TextFields)
