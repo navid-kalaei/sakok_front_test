@@ -1,16 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-// import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-// import InputLabel from '@material-ui/core/InputLabel'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import Dropzone from '../Dropzone'
 import CategoriesMenu from '../CategoriesMenu'
+import TagInput from '../TagInput'
+import Tag from '../Tag'
 
 
 const styles = theme => ({
@@ -20,12 +23,19 @@ const styles = theme => ({
 	rtl: {
 		direction: 'rtl',
 	},
+	description: {
+		marginTop: theme.spacing.unit * 2,
+	},
+	tagBox: {
+		justify: 'flex-end',
+	},
 })
 
 const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(false))
 
 const FormDialog = (props) => {
 	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
+	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag1', 'tag2', 'tag3', 'tag1', 'tag2', 'tag3'])
 
 	return (
 		<Dialog
@@ -37,24 +47,34 @@ const FormDialog = (props) => {
 		>
 			<DialogTitle id="form-dialog-title" className={classes.rtl}>بارگذاری تصویر </DialogTitle>
 			<DialogContent>
-				{/*<DialogContentText className={classes.rtl}>*/}
-				{/*To subscribe to this website, please enter your email address here. We will send*/}
-				{/*updates occasionally.*/}
-				{/*</DialogContentText>*/}
 				<Dropzone/>
+				<Typography variant="body1" className={classNames(classes.rtl, classes.description)}>توضیحات:</Typography>
 				<TextField
 					autoFocus
 					margin="dense"
 					id="description"
 					name="description"
-					// label="Email Address"
 					type="text"
 					multiline
 					fullWidth
 					rowsMax={2}
 					className={classes.rtl}
 				/>
-				<CategoriesMenu/>
+				<Grid container spacing={4} className={classes.rtl}>
+					<Grid item xs={6}>
+						<TagInput/>
+					</Grid>
+					<Grid item xs={6}>
+						<CategoriesMenu/>
+					</Grid>
+					{tags.map(tag => (
+						<Grid item key={tag} direction="row-reverse">
+							<Tag>{tag}</Tag>
+						</Grid>
+					))}
+				</Grid>
+
+
 			</DialogContent>
 			<DialogActions className={classes.rtl}>
 				<Button onClick={handleClose(handleUploadImageDialog)} color="secondary" variant="contained">
