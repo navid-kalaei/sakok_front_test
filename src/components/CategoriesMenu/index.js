@@ -1,53 +1,47 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import {withStyles} from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import styles from './styles'
+import BACKEND_API from '../../config/apis'
 
-
-const currencies = [
-	{
-		value: 'USD',
-		label: '$',
-	},
-	{
-		value: 'EUR',
-		label: '€',
-	},
-	{
-		value: 'BTC',
-		label: '฿',
-	},
-	{
-		value: 'JPY',
-		label: '¥',
-	},
-]
 
 class TextFields extends React.Component {
+
+	componentDidMount() {
+		axios.get(BACKEND_API.category).then(({data}) => {
+			this.setState({categories: data})
+		})
+	}
+
 	state = {
-		currency: 'EUR',
+		selectedCategory: '',
+		categories: [],
 	}
 
 	handleChange = name => event => {
-		this.setState({[name]: event.target.value})
-		this.props.handleCategoryValue(event.target.value)
+		const selectedCategoryValue = event.target.value
+		this.setState({[name]: selectedCategoryValue})
+		const selectedCategoryId = this.state.categories.filter(category => category.value === selectedCategoryValue)[0]._id
+		this.props.handleSelectedCategoryId(selectedCategoryId)
 	}
 
 	render() {
 		const {classes} = this.props
+		const {selectedCategory, categories} = this.state
 
 		return (
 			<form className={classes.container} noValidate autoComplete="off">
 
 				<TextField
-					id="standard-select-currency"
+					id="category"
 					select
 					label="دسته‌بندی"
 					className={classes.textField}
-					value={this.state.currency}
-					onChange={this.handleChange('currency')}
+					value={selectedCategory}
+					onChange={this.handleChange('selectedCategory')}
 					SelectProps={{
 						MenuProps: {
 							className: classes.menu,
@@ -56,7 +50,7 @@ class TextFields extends React.Component {
 					margin="normal"
 					variant="outlined"
 				>
-					{currencies.map(option => (
+					{categories.map(option => (
 						<MenuItem key={option.value} value={option.value} className={classes.rtl}>
 							{option.label}
 						</MenuItem>
@@ -69,7 +63,7 @@ class TextFields extends React.Component {
 
 TextFields.propTypes = {
 	classes: PropTypes.object.isRequired,
-	handleCategoryValue: PropTypes.func.isRequired,
+	handleSelectedCategoryId: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(TextFields)

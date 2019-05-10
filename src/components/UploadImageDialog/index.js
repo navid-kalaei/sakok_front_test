@@ -45,11 +45,12 @@ const submissionConfig = {
 	},
 }
 
-const onSubmitImage = ({handleUploadImageDialog, image, title, description, selectedCategory, tags}) => () => {
+const onSubmitImage = ({handleUploadImageDialog, image, title, description, selectedCategoryId, tags}) => () => {
 	const form = new FormData()
 	form.append('image', image)
 	form.append('title', title)
 	form.append('description', description)
+	form.append('category', selectedCategoryId)
 	tags.map(tag => form.append('tags', tag))
 
 	axios.post(BACKEND_API.image, form, submissionConfig)
@@ -61,8 +62,7 @@ const FormDialog = (props) => {
 	// TODO: handle tags
 	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
-	// eslint-disable-next-line
-	const [selectedCategory, handleCategoryValue] = useState('none')
+	const [selectedCategoryId, handleSelectedCategoryId] = useState('none')
 	const [description, handleDescription] = useState('')
 	const [title, handleTitle] = useState('')
 	const [image, handleImage] = useState(null)
@@ -111,7 +111,7 @@ const FormDialog = (props) => {
 						<TagInput/>
 					</Grid>
 					<Grid item xs={6}>
-						<CategoriesMenu handleCategoryValue={handleCategoryValue}/>
+						<CategoriesMenu handleSelectedCategoryId={handleSelectedCategoryId}/>
 					</Grid>
 					{tags.map(tag => (
 						<Grid item key={tag}>
@@ -132,7 +132,7 @@ const FormDialog = (props) => {
 						image,
 						title,
 						description,
-						selectedCategory,
+						selectedCategoryId,
 						tags
 					})}
 					color="primary"
