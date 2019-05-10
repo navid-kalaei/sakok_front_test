@@ -1,17 +1,23 @@
 import React, {useState} from 'react'
 import AppBar from './components/AppBar'
 import Gallery from './views/Gallery'
+import ImageDialog from './components/ImageDialog'
 
 
 function App() {
-	const [isUploadImageDialogOpen, handleUploadImageDialog] = useState(false)
+	const [isImageDialogOpen, handleImageDialog] = useState(false)
+	const [newOrModifiedImage, handleNewOrModifiedImage] = useState({})
 
 	return (
 		<div className="App">
-			<AppBar handleUploadImageDialog={handleUploadImageDialog}/>
+			<AppBar handleImageDialog={handleImageDialog}/>
 			<Gallery
-				isUploadImageDialogOpen={isUploadImageDialogOpen}
-				handleUploadImageDialog={handleUploadImageDialog}
+				handleImageDialog={handleImageDialog}
+			/>
+			<ImageDialog
+				handleImageDialog={handleImageDialog}
+				isImageDialogOpen={isImageDialogOpen}
+				handleNewOrModifiedImage={handleNewOrModifiedImage}
 			/>
 		</div>
 	)

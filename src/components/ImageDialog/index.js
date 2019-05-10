@@ -33,7 +33,7 @@ const styles = theme => ({
 	},
 })
 
-const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(false))
+const handleClose = (handleImageDialog) => () => (handleImageDialog(false))
 
 const onTitleChange = (handleTitle) => (event) => (handleTitle(event.target.value))
 
@@ -41,11 +41,22 @@ const onDescriptionChange = (handleDescription) => (event) => (handleDescription
 
 const submissionConfig = {
 	headers: {
-		'content-type': 'multipart/form-data'
+		'content-type': 'multipart/form-data',
 	},
 }
 
-const onSubmitImage = ({handleUploadImageDialog, image, title, description, selectedCategoryId, tags}) => () => {
+// TODO: reset states
+// TODO: set default category to none
+
+const onSubmitImage = ({
+	                       handleNewOrModifiedImage,
+	                       handleImageDialog,
+	                       image,
+	                       title,
+	                       description,
+	                       selectedCategoryId,
+	                       tags,
+                       }) => () => {
 	const form = new FormData()
 	form.append('image', image)
 	form.append('title', title)
@@ -53,12 +64,12 @@ const onSubmitImage = ({handleUploadImageDialog, image, title, description, sele
 	form.append('category', selectedCategoryId)
 	tags.map(tag => form.append('tags', tag))
 
-	axios.post(BACKEND_API.image, form, submissionConfig)
-	handleUploadImageDialog(false)
+	axios.post(BACKEND_API.image, form, submissionConfig).then(({data}) => handleNewOrModifiedImage(data))
+	handleImageDialog(false)
 }
 
-const FormDialog = (props) => {
-	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
+const ImageDialog = (props) => {
+	const {handleNewOrModifiedImage, isImageDialogOpen, handleImageDialog, classes} = props
 	// TODO: handle tags
 	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
@@ -69,8 +80,8 @@ const FormDialog = (props) => {
 
 	return (
 		<Dialog
-			open={isUploadImageDialogOpen}
-			onClose={handleClose(handleUploadImageDialog)}
+			open={isImageDialogOpen}
+			onClose={handleClose(handleImageDialog)}
 			aria-labelledby="form-dialog-title"
 			maxWidth="sm"
 			fullWidth
@@ -123,17 +134,18 @@ const FormDialog = (props) => {
 
 			</DialogContent>
 			<DialogActions className={classes.rtl}>
-				<Button onClick={handleClose(handleUploadImageDialog)} color="secondary" variant="contained">
+				<Button onClick={handleClose(handleImageDialog)} color="secondary" variant="contained">
 					لغو
 				</Button>
 				<Button
 					onClick={onSubmitImage({
-						handleUploadImageDialog,
+						handleNewOrModifiedImage,
+						handleImageDialog,
 						image,
 						title,
 						description,
 						selectedCategoryId,
-						tags
+						tags,
 					})}
 					color="primary"
 					variant="contained"
@@ -146,10 +158,11 @@ const FormDialog = (props) => {
 }
 
 
-FormDialog.propTypes = {
+ImageDialog.propTypes = {
 	classes: PropTypes.object.isRequired,
-	handleUploadImageDialog: PropTypes.func.isRequired,
-	isUploadImageDialogOpen: PropTypes.bool.isRequired,
+	handleImageDialog: PropTypes.func.isRequired,
+	isImageDialogOpen: PropTypes.bool.isRequired,
+	handleNewOrModifiedImage: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(FormDialog)
+export default withStyles(styles)(ImageDialog)

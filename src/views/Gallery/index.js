@@ -4,7 +4,6 @@ import axios from 'axios'
 import {withStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '../../components/Card'
-import UploadImageDialog from '../../components/UploadImageDialog'
 import tileData from './tileData'
 import BACKEND_API from '../../config/apis'
 
@@ -37,7 +36,8 @@ class FullWidthGrid extends Component {
 	)
 
 	render() {
-		const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = this.props
+		// eslint-disable-next-line
+		const {handleImageDialog, classes} = this.props
 		const {images} = this.state
 
 		return (
@@ -62,10 +62,6 @@ class FullWidthGrid extends Component {
 
 				</Grid>
 
-				<UploadImageDialog
-					handleUploadImageDialog={handleUploadImageDialog}
-					isUploadImageDialogOpen={isUploadImageDialogOpen}
-				/>
 
 			</div>
 		)
@@ -74,8 +70,7 @@ class FullWidthGrid extends Component {
 
 FullWidthGrid.propTypes = {
 	classes: PropTypes.object.isRequired,
-	handleUploadImageDialog: PropTypes.func.isRequired,
-	isUploadImageDialogOpen: PropTypes.bool.isRequired,
+	handleImageDialog: PropTypes.func.isRequired,
 }
 
 

@@ -80,13 +80,13 @@ const styles = theme => ({
 })
 
 function SearchAppBar(props) {
-	const {handleUploadImageDialog, classes} = props
+	const {handleImageDialog, classes} = props
 
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<IconButton color="inherit" onClick={() => handleUploadImageDialog(true)}>
+					<IconButton color="inherit" onClick={() => handleImageDialog(true)}>
 						<AddPhotoAlternateIcon className={classes.icon}/>
 					</IconButton>
 					<IconButton color="inherit">
@@ -116,7 +116,7 @@ function SearchAppBar(props) {
 
 SearchAppBar.propTypes = {
 	classes: PropTypes.object.isRequired,
-	handleUploadImageDialog: PropTypes.func.isRequired,
+	handleImageDialog: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(SearchAppBar)
