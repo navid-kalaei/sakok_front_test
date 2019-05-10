@@ -19,25 +19,34 @@ const styles = theme => ({
 class FullWidthGrid extends Component {
 
 	state = {
-		images: [],
+		images: {},
 	}
 
 	componentDidMount() {
-		axios.get(BACKEND_API.image).then(({data}) => (this.setState({images: data})))
+		axios.get(BACKEND_API.image).then(({data}) => {
+			const fetchedData = data.reduce((images, currentImage) => {
+				images[currentImage._id] = currentImage
+				return images
+			}, {})
+			this.setState({images: fetchedData})
+		})
 	}
 
+	// static getDerivedStateFromProps(nextProps, prevState) {
+	//
+	// }
 
-	addImageToGallery = (id) => (axios.get(`${BACKEND_API.image}/${id}`).then(({data}) => {
-				const newImages = this.state.images
-				newImages.push(data)
-				this.setState({images: newImages})
-			},
-		)
-	)
+	// addImageToGallery = (id) => (axios.get(`${BACKEND_API.image}/${id}`).then(({data}) => {
+	// 			const newImages = this.state.images
+	// 			newImages.push(data)
+	// 			this.setState({images: newImages})
+	// 		},
+	// 	)
+	// )
 
 	render() {
 		// eslint-disable-next-line
-		const {handleImageDialog, classes} = this.props
+		const {newOrModifiedImage, handleImageDialog, classes} = this.props
 		const {images} = this.state
 
 		return (
@@ -48,18 +57,17 @@ class FullWidthGrid extends Component {
 							<Card {...image}/>
 						</Grid>
 					))}
-					{images.map(image => (
-						<Grid item xs={12} sm={6} md={4} key={image._id}>
+					{Object.keys(images).map(imageId => (
+						<Grid item xs={12} sm={6} md={4} key={imageId}>
 							<Card
-								src={`data:${image.image.mimetype};base64,${(new Buffer(image.image.data.data)).toString('base64')}`}
-								title={image.title}
-								date={image.createdAt}
-								tags={image.tags}
-								category={image.category.label}
+								src={`data:${images[imageId].image.mimetype};base64,${(new Buffer(images[imageId].image.data.data)).toString('base64')}`}
+								title={images[imageId].title}
+								date={images[imageId].createdAt}
+								tags={images[imageId].tags}
+								category={images[imageId].category.label}
 							/>
 						</Grid>
 					))}
-
 				</Grid>
 
 
@@ -71,6 +79,7 @@ class FullWidthGrid extends Component {
 FullWidthGrid.propTypes = {
 	classes: PropTypes.object.isRequired,
 	handleImageDialog: PropTypes.func.isRequired,
+	// newOrModifiedImage: PropTypes.func,
 }
 
 

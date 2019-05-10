@@ -13,6 +13,7 @@ function App() {
 			<AppBar handleImageDialog={handleImageDialog}/>
 			<Gallery
 				handleImageDialog={handleImageDialog}
+				newOrModifiedImage={newOrModifiedImage}
 			/>
 			<ImageDialog
 				handleImageDialog={handleImageDialog}
