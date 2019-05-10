@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import classNames from 'classnames'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Button from '@material-ui/core/Button'
@@ -14,6 +15,7 @@ import Dropzone from '../Dropzone'
 import CategoriesMenu from '../CategoriesMenu'
 import TagInput from '../TagInput'
 import Tag from '../Tag'
+import BACKEND_API from '../../config/apis'
 
 
 const styles = theme => ({
@@ -35,6 +37,22 @@ const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(
 
 const onDescriptionChange = (handleDescription) => (event) => (handleDescription(event.target.value))
 
+const submissionConfig = {
+	headers: {
+		'content-type': 'multipart/form-data'
+	},
+}
+
+const onSubmitImage = ({handleUploadImageDialog, image, description, selectedCategory, tags}) => () => {
+	const form = new FormData()
+	form.append('image', image)
+	form.append('description', description)
+	tags.map(tag => form.append('tags', tag))
+
+	axios.post(BACKEND_API.image, form, submissionConfig)
+	handleUploadImageDialog(false)
+}
+
 const FormDialog = (props) => {
 	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
 	// eslint-disable-next-line
@@ -42,6 +60,7 @@ const FormDialog = (props) => {
 	// eslint-disable-next-line
 	const [selectedCategory, handleCategoryValue] = useState('none')
 	const [description, handleDescription] = useState('')
+	const [image, handleImage] = useState(null)
 
 	return (
 		<Dialog
@@ -53,7 +72,7 @@ const FormDialog = (props) => {
 		>
 			<DialogTitle id="form-dialog-title" className={classes.rtl}>مشخصات تصویر</DialogTitle>
 			<DialogContent>
-				<Dropzone/>
+				<Dropzone handleImage={handleImage}/>
 				<Typography variant="body1" className={classNames(classes.rtl, classes.description)}>توضیحات:</Typography>
 				<TextField
 					autoFocus
@@ -88,7 +107,17 @@ const FormDialog = (props) => {
 				<Button onClick={handleClose(handleUploadImageDialog)} color="secondary" variant="contained">
 					لغو
 				</Button>
-				<Button onClick={handleClose(handleUploadImageDialog)} color="primary" variant="contained">
+				<Button
+					onClick={onSubmitImage({
+						handleUploadImageDialog,
+						image,
+						description,
+						selectedCategory,
+						tags
+					})}
+					color="primary"
+					variant="contained"
+				>
 					ارسال
 				</Button>
 			</DialogActions>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useCallback} from 'react'
+import PropTypes from 'prop-types'
 import {useDropzone} from 'react-dropzone'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
@@ -33,10 +34,25 @@ const styles = theme => ({
 })
 
 function Accept(props) {
-	const {classes} = props
+	const {classes, handleImage} = props
+
+	const onDrop = useCallback(acceptedFiles => {
+		// const reader = new FileReader()
+		const acceptedFile = acceptedFiles[0]
+		handleImage(acceptedFile)
+		// reader.onabort = () => console.log('file reading was aborted')
+		// reader.onerror = () => console.log('file reading has failed')
+		// reader.onload = () => {
+			// handleImage(reader.result)
+			// handleImage(reader.result)
+		// }
+
+		// reader.readAsArrayBuffer(acceptedFile)
+	}, [handleImage])
 
 	const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-		accept: 'image/jpeg, image/png',
+		accept: 'image/jpeg, image/png, image/jpg',
+		onDrop,
 	})
 
 	const acceptedFile = acceptedFiles.length !==0 ? acceptedFiles[0] : null
@@ -46,10 +62,9 @@ function Accept(props) {
 			<div {...getRootProps({className: classes.dropzone})}>
 				<input {...getInputProps()} />
 				<p className={classes.rtl}>بکشید و رها کنید یا کلیک نمایید</p>
-				<em>(قابل پذیرش هستند *.jpeg و *.png تنها تصاویر)</em>
 			</div>
 			<aside>
-				<Typography variant="body" className={classNames(classes.rtl, classes.margin)}>فایل انتخاب شده:</Typography>
+				<Typography variant="body1" className={classNames(classes.rtl, classes.margin)}>فایل انتخاب شده:</Typography>
 				{acceptedFile ? (
 					<Typography variant="subtitle2" className={classNames(classes.rtl, classes.margin)}>
 						{` بایت ${acceptedFile.path} - ${acceptedFile.size}`}
@@ -61,6 +76,12 @@ function Accept(props) {
 			</aside>
 		</section>
 	)
+}
+
+
+Accept.propTypes = {
+	classes: PropTypes.object.isRequired,
+	handleImage: PropTypes.func.isRequired,
 }
 
 export default withStyle(styles)(Accept)
