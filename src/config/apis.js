@@ -1,5 +1,8 @@
+const baseUrl = 'http://localhost:3001'
+
 const API = {
-	image: 'http://localhost:3001/image'
+	image: `${baseUrl}/image`,
+	category: `${baseUrl}/category`,
 }
 
 export default API
