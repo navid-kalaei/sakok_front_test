@@ -35,6 +35,8 @@ const styles = theme => ({
 
 const handleClose = (handleUploadImageDialog) => () => (handleUploadImageDialog(false))
 
+const onTitleChange = (handleTitle) => (event) => (handleTitle(event.target.value))
+
 const onDescriptionChange = (handleDescription) => (event) => (handleDescription(event.target.value))
 
 const submissionConfig = {
@@ -43,9 +45,10 @@ const submissionConfig = {
 	},
 }
 
-const onSubmitImage = ({handleUploadImageDialog, image, description, selectedCategory, tags}) => () => {
+const onSubmitImage = ({handleUploadImageDialog, image, title, description, selectedCategory, tags}) => () => {
 	const form = new FormData()
 	form.append('image', image)
+	form.append('title', title)
 	form.append('description', description)
 	tags.map(tag => form.append('tags', tag))
 
@@ -55,11 +58,13 @@ const onSubmitImage = ({handleUploadImageDialog, image, description, selectedCat
 
 const FormDialog = (props) => {
 	const {isUploadImageDialogOpen, handleUploadImageDialog, classes} = props
+	// TODO: handle tags
 	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
 	// eslint-disable-next-line
 	const [selectedCategory, handleCategoryValue] = useState('none')
 	const [description, handleDescription] = useState('')
+	const [title, handleTitle] = useState('')
 	const [image, handleImage] = useState(null)
 
 	return (
@@ -73,6 +78,20 @@ const FormDialog = (props) => {
 			<DialogTitle id="form-dialog-title" className={classes.rtl}>مشخصات تصویر</DialogTitle>
 			<DialogContent>
 				<Dropzone handleImage={handleImage}/>
+				<Typography variant="body1" className={classNames(classes.rtl, classes.description)}>تیتر:</Typography>
+				<TextField
+					autoFocus
+					margin="dense"
+					id="title"
+					name="title"
+					type="text"
+					value={title}
+					// multiline
+					fullWidth
+					rowsMax={1}
+					className={classes.rtl}
+					onChange={onTitleChange(handleTitle)}
+				/>
 				<Typography variant="body1" className={classNames(classes.rtl, classes.description)}>توضیحات:</Typography>
 				<TextField
 					autoFocus
@@ -111,6 +130,7 @@ const FormDialog = (props) => {
 					onClick={onSubmitImage({
 						handleUploadImageDialog,
 						image,
+						title,
 						description,
 						selectedCategory,
 						tags
