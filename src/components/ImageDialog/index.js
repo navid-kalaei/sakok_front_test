@@ -64,8 +64,8 @@ const onSubmitImage = ({
 	form.append('category', selectedCategoryId)
 	tags.map(tag => form.append('tags', tag))
 
-	axios.post(BACKEND_API.image, form, submissionConfig).then(({data}) => handleNewOrModifiedImage(data))
 	handleImageDialog(false)
+	axios.post(BACKEND_API.image, form, submissionConfig).then(({data}) => {})
 }
 
 const ImageDialog = (props) => {
@@ -162,7 +162,6 @@ ImageDialog.propTypes = {
 	classes: PropTypes.object.isRequired,
 	handleImageDialog: PropTypes.func.isRequired,
 	isImageDialogOpen: PropTypes.bool.isRequired,
-	handleNewOrModifiedImage: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(ImageDialog)

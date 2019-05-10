@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import {withStyles} from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import Card from '../../components/Card'
 import tileData from './tileData'
@@ -32,21 +32,9 @@ class FullWidthGrid extends Component {
 		})
 	}
 
-	// static getDerivedStateFromProps(nextProps, prevState) {
-	//
-	// }
-
-	// addImageToGallery = (id) => (axios.get(`${BACKEND_API.image}/${id}`).then(({data}) => {
-	// 			const newImages = this.state.images
-	// 			newImages.push(data)
-	// 			this.setState({images: newImages})
-	// 		},
-	// 	)
-	// )
-
 	render() {
 		// eslint-disable-next-line
-		const {newOrModifiedImage, handleImageDialog, classes} = this.props
+		const {handleImageDialog, classes} = this.props
 		const {images} = this.state
 
 		return (
@@ -79,7 +67,6 @@ class FullWidthGrid extends Component {
 FullWidthGrid.propTypes = {
 	classes: PropTypes.object.isRequired,
 	handleImageDialog: PropTypes.func.isRequired,
-	// newOrModifiedImage: PropTypes.func,
 }
 
 
