@@ -1,0 +1,2 @@
+export const ADD_OR_EDIT_IMAGE = 'ADD_OR_EDIT_IMAGE'
+export const FETCH_IMAGES = 'FETCH_IMAGES'

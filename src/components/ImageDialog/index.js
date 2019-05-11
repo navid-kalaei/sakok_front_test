@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import {addOrEditImage} from '../../actions/images'
 import classNames from 'classnames'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Button from '@material-ui/core/Button'
@@ -15,7 +17,6 @@ import Dropzone from '../Dropzone'
 import CategoriesMenu from '../CategoriesMenu'
 import TagInput from '../TagInput'
 import Tag from '../Tag'
-import BACKEND_API from '../../config/apis'
 
 
 const styles = theme => ({
@@ -39,17 +40,12 @@ const onTitleChange = (handleTitle) => (event) => (handleTitle(event.target.valu
 
 const onDescriptionChange = (handleDescription) => (event) => (handleDescription(event.target.value))
 
-const submissionConfig = {
-	headers: {
-		'content-type': 'multipart/form-data',
-	},
-}
 
 // TODO: reset states
 // TODO: set default category to none
 
 const onSubmitImage = ({
-	                       handleNewOrModifiedImage,
+	                       addOrEditImage,
 	                       handleImageDialog,
 	                       image,
 	                       title,
@@ -64,12 +60,13 @@ const onSubmitImage = ({
 	form.append('category', selectedCategoryId)
 	tags.map(tag => form.append('tags', tag))
 
+	addOrEditImage(form)
 	handleImageDialog(false)
-	axios.post(BACKEND_API.image, form, submissionConfig).then(({data}) => {})
+
 }
 
 const ImageDialog = (props) => {
-	const {handleNewOrModifiedImage, isImageDialogOpen, handleImageDialog, classes} = props
+	const {addOrEditImage, isImageDialogOpen, handleImageDialog, classes} = props
 	// TODO: handle tags
 	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
@@ -139,7 +136,7 @@ const ImageDialog = (props) => {
 				</Button>
 				<Button
 					onClick={onSubmitImage({
-						handleNewOrModifiedImage,
+						addOrEditImage,
 						handleImageDialog,
 						image,
 						title,
@@ -162,6 +159,16 @@ ImageDialog.propTypes = {
 	classes: PropTypes.object.isRequired,
 	handleImageDialog: PropTypes.func.isRequired,
 	isImageDialogOpen: PropTypes.bool.isRequired,
+	addOrEditImage: PropTypes.func,
 }
 
-export default withStyles(styles)(ImageDialog)
+const mapDispatchToProps = (dispatch) => (
+	bindActionCreators(
+		{
+			addOrEditImage,
+		},
+		dispatch,
+	)
+)
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(ImageDialog))
