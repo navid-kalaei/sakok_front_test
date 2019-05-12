@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 
-function Tag(props) {
+function CustomChip(props) {
 	const {onDeleteChip, children, classes} = props
 
 	return (
@@ -25,10 +25,10 @@ function Tag(props) {
 	)
 }
 
-Tag.propTypes = {
+CustomChip.propTypes = {
 	children: PropTypes.string.isRequired,
 	onDeleteChip: PropTypes.func,
 }
 
 
-export default withStyles(styles)(Tag)
+export default withStyles(styles)(CustomChip)
