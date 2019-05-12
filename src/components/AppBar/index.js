@@ -80,7 +80,7 @@ const styles = theme => ({
 })
 
 function SearchAppBar(props) {
-	const {handleImageDialog, classes} = props
+	const {handleImageDialog, handleCategoryDialog, classes} = props
 
 	return (
 		<div className={classes.root}>
@@ -90,7 +90,7 @@ function SearchAppBar(props) {
 						<AddPhotoAlternateIcon className={classes.icon}/>
 					</IconButton>
 					<IconButton color="inherit">
-						<CategoryIcon className={classes.icon}/>
+						<CategoryIcon className={classes.icon} onClick={() => handleCategoryDialog(true)}/>
 					</IconButton>
 					<IconButton color="inherit">
 						<LoyatyIcon className={classes.icon}/>
@@ -117,6 +117,7 @@ function SearchAppBar(props) {
 SearchAppBar.propTypes = {
 	classes: PropTypes.object.isRequired,
 	handleImageDialog: PropTypes.func.isRequired,
+	handleCategoryDialog: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(SearchAppBar)

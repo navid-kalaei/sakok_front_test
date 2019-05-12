@@ -16,13 +16,10 @@ import Typography from '@material-ui/core/Typography'
 import Dropzone from '../Dropzone'
 import CategoriesMenu from '../CategoriesMenu'
 import TagInput from '../TagInput'
-import Tag from '../Tag'
+import CustomChip from '../CustomChip'
 
 
 const styles = theme => ({
-	root: {
-		flexGrow: 1,
-	},
 	rtl: {
 		direction: 'rtl',
 	},
@@ -33,6 +30,8 @@ const styles = theme => ({
 		justify: 'flex-end',
 	},
 })
+
+// TODO: update Redux on image update
 
 const handleClose = (handleImageDialog) => () => (handleImageDialog(false))
 
@@ -130,7 +129,7 @@ const ImageDialog = (props) => {
 					</Grid>
 					{tags.map(tag => (
 						<Grid item key={tag}>
-							<Tag isInImageDialog onDeleteTag={onDeleteTag(tags, handleTags)}>{tag}</Tag>
+							<CustomChip isInImageDialog onDeleteChip={onDeleteTag(tags, handleTags)}>{tag}</CustomChip>
 						</Grid>
 					))}
 				</Grid>

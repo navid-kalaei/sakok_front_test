@@ -12,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Tag from '../Tag'
+import CustomChip from '../CustomChip'
 import styles from './styles'
 
 
@@ -62,7 +62,7 @@ function CustomCard(props) {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
 					{tags.map((tag) => (
-							<Tag key={tag}>{tag}</Tag>
+							<CustomChip key={tag}>{tag}</CustomChip>
 						),
 					)
 					}

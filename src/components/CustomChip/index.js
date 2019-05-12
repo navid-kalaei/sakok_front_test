@@ -13,12 +13,12 @@ const styles = theme => ({
 
 
 function Tag(props) {
-	const {onDeleteTag, children, classes} = props
+	const {onDeleteChip, children, classes} = props
 
 	return (
 		<Chip
 			label={children}
-			onDelete={onDeleteTag && onDeleteTag(children)}
+			onDelete={onDeleteChip && onDeleteChip(children)}
 			color="secondary"
 			className={classes.chip}
 		/>
@@ -27,7 +27,7 @@ function Tag(props) {
 
 Tag.propTypes = {
 	children: PropTypes.string.isRequired,
-	onDeleteTag: PropTypes.func,
+	onDeleteChip: PropTypes.func,
 }
 
 
