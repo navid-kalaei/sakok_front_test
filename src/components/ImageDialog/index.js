@@ -68,6 +68,11 @@ const onAddTag = (tags, handleTags) => (newTag) => () => {
 	}
 }
 
+const onDeleteTag = (tags, handleTags) => (tagToRemove) => () => {
+	const newTags = tags.filter(tag => tag !== tagToRemove)
+	handleTags(newTags)
+}
+
 
 const ImageDialog = (props) => {
 	const {addOrEditImage, isImageDialogOpen, handleImageDialog, classes} = props
@@ -125,7 +130,7 @@ const ImageDialog = (props) => {
 					</Grid>
 					{tags.map(tag => (
 						<Grid item key={tag}>
-							<Tag isInImageDialog>{tag}</Tag>
+							<Tag isInImageDialog onDeleteTag={onDeleteTag(tags, handleTags)}>{tag}</Tag>
 						</Grid>
 					))}
 				</Grid>

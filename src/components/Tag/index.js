@@ -11,17 +11,14 @@ const styles = theme => ({
 	},
 });
 
-function handleDelete() {
-	alert('You clicked the delete icon.'); // eslint-disable-line no-alert
-}
 
 function Tag(props) {
-	const {isInImageDialog, children, classes} = props
+	const {onDeleteTag, children, classes} = props
 
 	return (
 		<Chip
 			label={children}
-			onDelete={isInImageDialog && handleDelete}
+			onDelete={onDeleteTag && onDeleteTag(children)}
 			color="secondary"
 			className={classes.chip}
 		/>
@@ -30,11 +27,8 @@ function Tag(props) {
 
 Tag.propTypes = {
 	children: PropTypes.string.isRequired,
-	isInImageDialog: PropTypes.bool.isRequired,
+	onDeleteTag: PropTypes.func,
 }
 
-Tag.defaultProps = {
-	isInImageDialog: false,
-}
 
 export default withStyles(styles)(Tag)
