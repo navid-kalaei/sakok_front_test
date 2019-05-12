@@ -89,8 +89,8 @@ function SearchAppBar(props) {
 					<IconButton color="inherit" onClick={() => handleImageDialog(true)}>
 						<AddPhotoAlternateIcon className={classes.icon}/>
 					</IconButton>
-					<IconButton color="inherit">
-						<CategoryIcon className={classes.icon} onClick={() => handleCategoryDialog(true)}/>
+					<IconButton color="inherit" onClick={() => handleCategoryDialog(true)}>
+						<CategoryIcon className={classes.icon}/>
 					</IconButton>
 					<IconButton color="inherit">
 						<LoyatyIcon className={classes.icon}/>
