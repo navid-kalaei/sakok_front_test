@@ -16,12 +16,12 @@ function handleDelete() {
 }
 
 function Tag(props) {
-	const {children, classes} = props
+	const {isInImageDialog, children, classes} = props
 
 	return (
 		<Chip
 			label={children}
-			onDelete={handleDelete}
+			onDelete={isInImageDialog && handleDelete}
 			color="secondary"
 			className={classes.chip}
 		/>
@@ -30,6 +30,11 @@ function Tag(props) {
 
 Tag.propTypes = {
 	children: PropTypes.string.isRequired,
+	isInImageDialog: PropTypes.bool.isRequired,
+}
+
+Tag.defaultProps = {
+	isInImageDialog: false,
 }
 
 export default withStyles(styles)(Tag)

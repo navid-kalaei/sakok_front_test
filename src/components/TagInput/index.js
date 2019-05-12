@@ -28,19 +28,17 @@ const styles = theme => ({
 
 class InputAdornments extends React.Component {
 	state = {
-		tag: '',
+		tagInput: '',
 	}
 
 	handleChange = prop => event => {
 		this.setState({[prop]: event.target.value})
 	}
 
-	handleClickShowPassword = () => {
-		this.setState(state => ({showPassword: !state.showPassword}))
-	}
 
 	render() {
-		const {classes} = this.props
+		const {onAddTag, classes} = this.props
+		const {tagInput} = this.state
 
 		return (
 			<div className={classes.root}>
@@ -51,13 +49,13 @@ class InputAdornments extends React.Component {
 					type="text"
 					label="تگ"
 					value={this.state.tag}
-					onChange={this.handleChange('tag')}
+					onChange={this.handleChange('tagInput')}
 					InputProps={{
 						startAdornment: (
 							<InputAdornment position="start">
 								<IconButton
-									aria-label="Toggle password visibility"
-									onClick={this.handleClickShowPassword}
+									aria-label="Add tag icon"
+									onClick={onAddTag(tagInput)}
 									color="primary"
 								>
 									<AddCircleIcon/>
@@ -73,6 +71,7 @@ class InputAdornments extends React.Component {
 
 InputAdornments.propTypes = {
 	classes: PropTypes.object.isRequired,
+	onAddTag: PropTypes.func,
 }
 
 export default withStyles(styles)(InputAdornments)

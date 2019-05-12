@@ -10,17 +10,11 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import IconButton from '@material-ui/core/IconButton'
-import Fab from '@material-ui/core/Fab'
 import EditIcon from '@material-ui/icons/Edit'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import AddIcon from '@material-ui/icons/Add'
 import Tag from '../Tag'
 import styles from './styles'
 
-
-function handleClick() {
-	alert('You clicked the Chip.') // eslint-disable-line no-alert
-}
 
 function CustomCard(props) {
 	const {src, title, date, description, category, tags, classes} = props
@@ -72,9 +66,6 @@ function CustomCard(props) {
 						),
 					)
 					}
-					<Fab color="primary" aria-label="Add Tag" size="small" onClick={handleClick} className={classes.fab}>
-						<AddIcon/>
-					</Fab>
 				</CardContent>
 			</Collapse>
 		</Card>

@@ -41,9 +41,6 @@ const onTitleChange = (handleTitle) => (event) => (handleTitle(event.target.valu
 const onDescriptionChange = (handleDescription) => (event) => (handleDescription(event.target.value))
 
 
-// TODO: reset states
-// TODO: set default category to none
-
 const onSubmitImage = ({
 	                       addOrEditImage,
 	                       handleImageDialog,
@@ -65,10 +62,15 @@ const onSubmitImage = ({
 
 }
 
+const onAddTag = (tags, handleTags) => (newTag) => () => {
+	if(!tags.includes(newTag)) {
+		handleTags([...tags, newTag])
+	}
+}
+
+
 const ImageDialog = (props) => {
 	const {addOrEditImage, isImageDialogOpen, handleImageDialog, classes} = props
-	// TODO: handle tags
-	// eslint-disable-next-line
 	const [tags, handleTags] = useState(['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'])
 	const [selectedCategoryId, handleSelectedCategoryId] = useState('none')
 	const [description, handleDescription] = useState('')
@@ -116,14 +118,14 @@ const ImageDialog = (props) => {
 				/>
 				<Grid container spacing={0} className={classes.rtl}>
 					<Grid item xs={6}>
-						<TagInput/>
+						<TagInput onAddTag={onAddTag(tags, handleTags)}/>
 					</Grid>
 					<Grid item xs={6}>
 						<CategoriesMenu handleSelectedCategoryId={handleSelectedCategoryId}/>
 					</Grid>
 					{tags.map(tag => (
 						<Grid item key={tag}>
-							<Tag>{tag}</Tag>
+							<Tag isInImageDialog>{tag}</Tag>
 						</Grid>
 					))}
 				</Grid>
