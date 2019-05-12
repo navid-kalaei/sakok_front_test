@@ -25,7 +25,6 @@ class FullWidthGrid extends Component {
 	render() {
 		// eslint-disable-next-line
 		const {images, handleImageDialog, classes} = this.props
-		console.log(images)
 		return (
 			<div className={classes.root}>
 				<Grid container spacing={16}>
